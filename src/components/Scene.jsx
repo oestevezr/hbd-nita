@@ -61,9 +61,10 @@ const Scene = ({ onOpenLetter }) => {
         depth={50} 
         count={3000} 
         factor={4} 
-        saturation={0} 
+        saturation={1} 
         fade 
         speed={0.5}
+        color="#d896ff"
       />
 
       {/* ===== REFERENCE CUBE (for debugging) ===== */}
