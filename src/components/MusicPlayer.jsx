@@ -13,7 +13,7 @@ const MusicPlayer = ({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 1, au
     const audio = new Audio(audioSrc);
     audio.loop = true;
     audio.preload = 'auto';
-    audio.volume = 0.7;
+    audio.volume = 1;
     audioRef.current = audio;
     return () => {
       try { audio.pause(); } catch {}

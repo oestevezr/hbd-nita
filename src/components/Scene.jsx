@@ -123,6 +123,7 @@ const Scene = ({ onOpenLetter }) => {
         enableRotate={true}
         minDistance={5}
         maxDistance={25}
+        minPolarAngle={Math.PI / 3}
         maxPolarAngle={Math.PI / 2}
         target={[0, 2, 0]}
       />
