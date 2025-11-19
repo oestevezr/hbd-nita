@@ -26,7 +26,7 @@ function App() {
       {/* ===== THE 3D CANVAS ===== */}
       <Canvas
         camera={{ 
-          position: [0, 3, 12], 
+          position: [0, 7, 35], 
           fov: 50,
           near: 0.1,
           far: 1000

@@ -80,8 +80,8 @@ const Scene = ({ onOpenLetter }) => {
       {/* ===== CAKE ===== */}
       <Suspense fallback={null}>
         <Cake 
-          position={[-1.5, 0, 0]} scale={0.2} 
-          rotation={[0, -Math.PI / -6, 0]}
+          position={[-3.5, 0, 0]} scale={0.2} 
+          rotation={[0, -Math.PI / -7, 0]}
         />
       </Suspense>
 

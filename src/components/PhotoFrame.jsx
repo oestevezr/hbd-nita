@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useGLTF, useTexture } from '@react-three/drei';
 
 const PhotoFrame = ({ 
@@ -9,9 +10,31 @@ const PhotoFrame = ({
 }) => {
   const { scene } = useGLTF(modelPath);
   const photoTexture = useTexture(photoPath);
+  const [animatedPosition, setAnimatedPosition] = useState([position[0] > 0 ? position[0] + 20 : position[0] - 20, position[1], position[2]]);
+  
+  useEffect(() => {
+    const startX = position[0] > 0 ? position[0] + 20 : position[0] - 20;
+    const targetX = position[0];
+    const duration = 1.2;
+    let elapsed = 0;
+
+    const interval = setInterval(() => {
+      elapsed += 0.016;
+      const progress = Math.min(elapsed / duration, 1);
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      const currentX = startX + (targetX - startX) * easeProgress;
+      setAnimatedPosition([currentX, position[1], position[2]]);
+      
+      if (progress >= 1) {
+        clearInterval(interval);
+      }
+    }, 16);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <group position={position} rotation={rotation} scale={scale}>
+    <group position={animatedPosition} rotation={rotation} scale={scale}>
       {/* The frame model */}
       <primitive object={scene.clone()} />
       

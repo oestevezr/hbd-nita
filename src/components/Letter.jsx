@@ -1,13 +1,35 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Text } from '@react-three/drei';
 import * as THREE from 'three';
 
 const Letter = ({ position = [0, -1.5, 2], onOpen }) => {
   const [isHovered, setIsHovered] = useState(false);
   const envelopeRef = useRef();
+  const [animatedPosition, setAnimatedPosition] = useState([position[0], position[1], position[2] + 15]);
+  
+  useEffect(() => {
+    const startZ = position[2] + 15;
+    const targetZ = position[2];
+    const duration = 1.3;
+    let elapsed = 0;
+
+    const interval = setInterval(() => {
+      elapsed += 0.016;
+      const progress = Math.min(elapsed / duration, 1);
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      const currentZ = startZ + (targetZ - startZ) * easeProgress;
+      setAnimatedPosition([position[0], position[1], currentZ]);
+      
+      if (progress >= 1) {
+        clearInterval(interval);
+      }
+    }, 16);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <group position={position}>
+    <group position={animatedPosition}>
       {/* ===== THE ENVELOPE (3D) ===== */}
       <mesh
         ref={envelopeRef}

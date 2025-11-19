@@ -44,9 +44,31 @@ const MusicPlayer = ({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 1, au
     return box.max.y + Math.max(0.25, height * 0.1); // small margin above
   }, [scene]);
 
+  const [animatedPosition, setAnimatedPosition] = useState([position[0] + 15, position[1], position[2]]);
+  
+  useEffect(() => {
+    const startX = position[0] + 15;
+    const targetX = position[0];
+    const duration = 1.4;
+    let elapsed = 0;
+
+    const interval = setInterval(() => {
+      elapsed += 0.016;
+      const progress = Math.min(elapsed / duration, 1);
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      const currentX = startX + (targetX - startX) * easeProgress;
+      setAnimatedPosition([currentX, position[1], position[2]]);
+      
+      if (progress >= 1) {
+        clearInterval(interval);
+      }
+    }, 16);
+
+    return () => clearInterval(interval);
+  }, []);
   return (
     <group
-      position={position}
+      position={animatedPosition}
       rotation={rotation}
       scale={scale}
       onClick={togglePlay}
